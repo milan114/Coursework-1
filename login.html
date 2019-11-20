@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<img id='logo' src="C:\Users\vanit\Desktop\Coursework-1/Logo/Logo.png" alt="logo">
+<link rel="stylesheet" href="Css.css" />
+<h1 id="hfont" align="center">Login</h1>
+
+<body>
+    <div id="form" style="width:500px;margin:auto;">
+        <form id="signup">
+            <label for="email">Email:</label>
+            <input required type="email" id="email" v-model='email'>
+            <br><br>
+            <label for="password">Password:</label>
+            <input required type="password" id="password" v-model='password'>
+            <br><br>
+            <button v-on:click='onSubmit'>Sign Up</button>
+            <button id="admin" v-on:click='admin'>Admin</button>
+        </form>
+
+        <script>
+            var signupApp = new Vue({
+                el: '#signup',
+                data: {
+                    email: '',
+                    password: '',
+                },
+                methods: {
+                    onSubmit: function () {
+                        var users = '';
+                        var newEmail = this.email;
+                        if (localStorage.getItem('users')) {
+                            users = JSON.parse(localStorage.getItem('users'));
+                        };
+
+                        if (users) {
+                            if (users.some(function (user) { return user.email === newEmail })) {
+                                alert('Email already Exists');
+                                return;
+                            }
+                            users.push({ 'email': newEmail, 'password': this.password });
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+                        else {
+                            users = [{ 'email': newEmail, 'password': this.password }];
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+                    }
+                }
+            })
+        </script>
+</body>
+
+</html>

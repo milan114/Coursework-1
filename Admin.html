@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+</head>
+<img id='logo' src="C:\Users\vanit\Desktop\Coursework-1/Logo/Logo.png" alt="logo">
+<link rel="stylesheet" href="Css.css" />
+<h1 id="hfont" align="center">Welcome</h1>
+<div>
+       <button> <a href='login.html' v-if='!signout'>sign out</a> </button>
+</div>
+
+
+<body>
+        <div id="app-2">
+                <myheader v-bind:signedin=signedin></myheader>
+        </div>
+        <script>
+var vue2 = new Vue({
+        el:'#app2',
+        data:{
+                'signed in':true
+        }
+})
+        </script>
+</body>
+
+
+
+
+
+</html>
