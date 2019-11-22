@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<img id='logo' src="C:\Users\vanit\Desktop\Coursework-1/Logo/Logo.png" alt="logo">
+<link rel="stylesheet" href="Css.css" />
+<h1 id="hfont" align="center">Welcome</h1>
+<button> <a href='login.html' v-if='!signout'>sign out</a> </button>
+
+<body>
+    <div id="clubs">
+        <h1 align="center">Filter</h1>
+        <!--This is displaying the checkboxes used to do the filtering-->
+        <div>
+            <label>Subjects:</label>
+            <label><input type="checkbox" v-model="selectedCategory" value="All" /> All</label>
+            <label><input type="checkbox" v-model="selectedCategory" value="maths" /> Maths</label>
+            <label><input type="checkbox" v-model="selectedCategory" value="english" /> English</label>
+            <label><input type="checkbox" v-model="selectedCategory" value="science" /> Science</label>
+        </div>
+        <ul class="clubs-list">
+            <li v-for="club in filteredClubs">{{ club.clubName }}</li>
+        </ul>
+    </div>
+    <script>
+        var clubs = new Vue({
+            el: "#clubs",
+            data: {
+                // this is an array telling the code what to display when the checkboxes are checked
+                clubs: [
+                    { clubName: "Math - Hendon - Price: £50", maths: true, english: false, science: false },
+                    { clubName: "Math - Colindale - Price: £60", maths: true, english: false, science: false },
+                    { clubName: "Math - Harrow - Price: £80", maths: true, english: false, science: false },
+                    { clubName: "Math - Egdware - Price: £100", maths: true, english: false, science: false },
+
+                    { clubName: "English - Hendon - Price: £80", maths: false, english: true, science: false },
+                    { clubName: "English - Colindale - Price: £90", maths: false, english: true, science: false },
+                    { clubName: "English - Harrow - Price: £70", maths: false, english: true, science: false },
+                    { clubName: "English - Egdware - Price: £60", maths: false, english: true, science: false },
+
+                    { clubName: "Science - Hendon - Price: £40", maths: false, english: false, science: true },
+                    { clubName: "Science - Colindale - Price: £50", maths: false, english: false, science: true },
+                    { clubName: "Science - Harrow - Price: £110", maths: false, english: false, science: true },
+                    { clubName: "Science - Egdware - Price: £90", maths: false, english: false, science: true },
+
+
+                ],
+                // this is for the ALL checkboxes to display all the courses available
+                selectedCategory: ['All'],
+            },
+            computed: {
+                filteredClubs: function () {
+                    var vm = this;
+                    var category = vm.selectedCategory;
+
+                    if (category.includes("All")) {
+                        return vm.clubs;
+                    } else {
+                        return vm.clubs.filter((club) => {
+                            var keys = Object.keys(club);
+                            var matchFilter = false;
+                            category.forEach((key) => {
+                                if (club[key] === true) {
+                                    matchFilter = true;
+                                }
+                            });
+                            return matchFilter;
+                        });
+                    }
+                }
+            },
+        });
+    </script>
+
+
+
+    </script>
+    <div id="app-4">
+        <h2 align="center">Reviews</h2>
+        <ul>
+            <li v-for="todo in todos">
+                <!-- creating the todo list -->
+                {{ todo.text }}
+            </li>
+        </ul>
+    </div>
+    <!-- content of the to do list -->
+    <script>
+        var app4 = new Vue({
+            el: '#app-4',
+            data: {
+                todos: [
+                    { text: 'Maths classes at Harrow were good and helpful' },
+                    { text: 'English classes at Hendon were not that helpful with my exams' },
+                    { text: 'Science classes at Colindale were very helpful with my exams' }
+                ]
+            }
+        }) 
+    </script>
+
+    <div id="review">
+        <!-- creating the textfield and button -->
+        <label>Leave a review: <input v-model="message"></input></label>
+        <button v-on:click="addtask">Add Review</button>
+        <!-- adding the users input to the list -->
+        <script>
+            var review = new Vue({
+                el: '#review',
+                data: {
+                    message: '',
+                },
+                methods: {
+                    addtask: function () {
+                        app4.todos.push({ text: this.message })
+                    }
+                }
+            })
+        </script>
+    </div>
+</body>
+
+</html>
