@@ -10,6 +10,7 @@
 
 <body>
     <div id="form" style="width:500px;margin:auto;">
+        <!-- creating the form which displays the email and password input box -->
         <form id="signup">
             <label for="email">Email:</label>
             <input required type="email" id="email" v-model='email'>
@@ -17,11 +18,13 @@
             <label for="password">Password:</label>
             <input required type="password" id="password" v-model='password'>
             <br><br>
+            <!-- creating the button to check if the email has already been used -->
             <button v-on:click='onSubmit'>Sign Up</button>
             <button id="admin" v-on:click='admin'>Admin</button>
         </form>
 
         <script>
+            // checking if the email address has already been entered in the localstorage of the browser
             var signupApp = new Vue({
                 el: '#signup',
                 data: {
@@ -35,7 +38,7 @@
                         if (localStorage.getItem('users')) {
                             users = JSON.parse(localStorage.getItem('users'));
                         };
-
+                        // this checks the localstorage to see if the email address is there 
                         if (users) {
                             if (users.some(function (user) { return user.email === newEmail })) {
                                 alert('Email already Exists');
@@ -44,6 +47,7 @@
                             users.push({ 'email': newEmail, 'password': this.password });
                             localStorage.setItem('users', JSON.stringify(users));
                         }
+                        // if the email address doesnt exist in the localstorage this would add it 
                         else {
                             users = [{ 'email': newEmail, 'password': this.password }];
                             localStorage.setItem('users', JSON.stringify(users));
