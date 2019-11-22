@@ -2,27 +2,92 @@
 <html lang="en">
 
 <head>
-
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <img id='logo' src="C:\Users\vanit\Desktop\Coursework-1/Logo/Logo.png" alt="logo">
 <link rel="stylesheet" href="Css.css" />
 <h1 id="hfont" align="center">Welcome</h1>
 <div>
-       <button> <a href='login.html' v-if='!signout'>sign out</a> </button>
+        <button> <a href='login.html' v-if='!signout'>sign out</a> </button>
 </div>
 
-
 <body>
-        <div id="app-2">
-                <myheader v-bind:signedin=signedin></myheader>
+        <div id="classes">
+                <!-- creating a table of content for the admin to scroll through and see what courses are available -->
+                <table>
+                        <h2 align="center">Classes</h2>
+                        <tr v-for="topic in topic2">
+                                <td>
+                                        <span v-show="!topic.edit">{{topic.topic}}</span>
+                                        <input type="text" v-model="topic.topic" v-show="topic.edit">
+                                </td>
+                                <td>
+                                        <span v-show="!topic.edit">{{topic.location}}</span>
+                                        <input type="text" v-model="topic.location" v-show="topic.edit">
+                                </td>
+                                <td>
+                                        <span v-show="!topic.edit">{{topic.price}}</span>
+                                        <input type="text" v-model="topic.price" v-show="topic.edit">
+                                </td>
+                                <td>
+                                        <button v-show="!topic.edit" v-on:click="edittopic(topic)">edit</button>
+                                        <button v-show="topic.edit" v-on:click="canceltopic(topic)">cancel</button>
+                                        <button v-show="topic.edit" v-on:click="savetopic(topic)">save</button>
+                                </td>
+                        </tr>
+                </table>
+
         </div>
+        <!-- creating the array to hold the content of the table -->
         <script>
-var vue2 = new Vue({
-        el:'#app2',
-        data:{
-                'signed in':true
-        }
-})
+                var officeVM = new Vue({
+                        el: '#classes',
+                        data: {
+                                classes: [
+                                        { topic: 'Math', location: 'Hendon', price: '£50', edit: false },
+                                        { topic: 'Math', location: 'Colindale', price: '£60', edit: false },
+                                        { topic: 'Math', location: 'Harrow', price: '£80', edit: false },
+                                        { topic: 'Math', location: 'Egdware', price: '£100', edit: false },
+
+                                        { topic: 'English', location: 'Hendon', price: '£80', edit: false },
+                                        { topic: 'English', location: 'Colindale', price: '£90', edit: false },
+                                        { topic: 'English', location: 'Harrow', price: '£70', edit: false },
+                                        { topic: 'English', location: 'Egdware', price: '£60', edit: false },
+
+                                        { topic: 'Science', location: 'Hendon', price: '£40', edit: false },
+                                        { topic: 'Science', location: 'Colindale', price: '£50', edit: false },
+                                        { topic: 'Science', location: 'Harrow', price: '£110', edit: false },
+                                        { topic: 'Science', location: 'Egdware', price: '£90', edit: false }
+                                ]
+                        },
+                        computed: {
+                                topic2: function () {
+                                        var _classes = [];
+                                        for (var i = 0, classes; classes = this.classes[i]; i++) {
+                                                classes.edit = false;
+                                                _classes.push(classes);
+                                        }
+                                        return _classes;
+                                }
+                        },
+                        // method for the buttons shown in the table when the admin click on something
+                        methods: {
+                                edittopic: function (topic) {
+                                        this._originaltopic = Object.assign({}, topic);
+                                        topic.edit = true;
+                                },
+
+                                canceltopic: function (topic) {
+                                        Object.assign(topic, this._originaltopic);
+                                        topic.edit = false;
+                                },
+
+                                savetopic: function (topic) {
+                                        Object.assign(topic, this._topic);
+                                        topic.edit = false;
+                                }
+                        }
+                })
         </script>
 </body>
 
