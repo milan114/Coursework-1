@@ -1,61 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <img id='logo' src="F:\Uni Year 3\App Development\Coursework 2\Coursework 2 code\Images\Logo.png" alt="logo">
+    <link rel="stylesheet" href="Css.css" />
+    <title>Login</title>
 </head>
-<img id='logo' src="C:\Users\vanit\Desktop\Coursework-1/Logo/Logo.png" alt="logo">
-<link rel="stylesheet" href="Css.css" />
-<h1 id="hfont" align="center">Login</h1>
 
 <body>
-    <div id="form" style="width:500px;margin:auto;">
-        <!-- creating the form which displays the email and password input box -->
-        <form id="signup">
-            <label for="email">Email:</label>
-            <input required type="email" id="email" v-model='email'>
-            <br><br>
-            <label for="password">Password:</label>
-            <input required type="password" id="password" v-model='password'>
-            <br><br>
-            <!-- creating the button to check if the email has already been used -->
-            <button v-on:click='onSubmit'>Sign Up</button>
-            <button id="admin" v-on:click='admin'>Admin</button>
-        </form>
+    <div id="signup"style="width:500px;margin:auto;">
+        <h1 style="text-align:center">Sign Up </h1>
+        <h2 id="regmessage"></h2>
+        <form>
+            <label for="email">Email</label>
+            <input required type="email" name="email" v-model="email">
+            <label for="password">Password</label>
+            <input required type="password" name="password" v-model="password">
+            <button v-on:click='signup'>signup</button>
 
-        <script>
-            // checking if the email address has already been entered in the localstorage of the browser
-            var signupApp = new Vue({
-                el: '#signup',
-                data: {
-                    email: '',
-                    password: '',
-                },
-                methods: {
-                    onSubmit: function () {
-                        var users = '';
-                        var newEmail = this.email;
-                        if (localStorage.getItem('users')) {
-                            users = JSON.parse(localStorage.getItem('users'));
-                        };
-                        // this checks the localstorage to see if the email address is there 
-                        if (users) {
-                            if (users.some(function (user) { return user.email === newEmail })) {
-                                alert('Email already Exists');
-                                return;
-                            }
-                            users.push({ 'email': newEmail, 'password': this.password });
-                            localStorage.setItem('users', JSON.stringify(users));
-                        }
-                        // if the email address doesnt exist in the localstorage this would add it 
-                        else {
-                            users = [{ 'email': newEmail, 'password': this.password }];
-                            localStorage.setItem('users', JSON.stringify(users));
-                        }
-                    }
+        </form>
+    </div>
+    <script>
+        var testing3 = new Vue({
+            el: '#signup',
+            data: {
+                email: '',
+                password: '',
+
+            },
+            methods: {
+                signup: function () {
+                    fetch(`http://localhost:3000/collections/users`, {
+                        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+
+                        body: JSON.stringify({ email: this.email, password: this.password })
+                    }).then(function (response) {
+                        return response.json()
+                    }).then(function (data) {
+                        console.log('post rest', data)
+                    })
+                    
                 }
-            })
-        </script>
+            }
+        })
+    </script>
 </body>
 
 </html>

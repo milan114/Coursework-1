@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <img id='logo' src="F:\Uni Year 3\App Development\Coursework 2\Coursework 2 code\Images\Logo.png" alt="logo">
+    <link rel="stylesheet" href="Css.css" />
+    <title>User</title>
+</head>
+<h1 style="text-align:center">User</h1>
+<body>
+    <div id="courses">
+        <div v-for="course in courses" class="courses">
+            <ul>
+                <li v-for='(value, name) in course'>
+                    {{name}}: {{value}}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <script>
+        fetch('http://localhost:3000/collections/courses').then(
+            function (response) {
+                response.text().then(
+                    function (text) {
+                        alert(text);
+                        testing.courses = JSON.parse(text);
+                    }).catch(function (err) {
+                        console.log('Fetch problem: ' + err.message);
+                    });
+
+
+                var testing = new Vue({
+                    el: '#courses',
+                    data: {
+                        name: '',
+                        value: '',
+                        courses: []
+                    }
+                })
+            },
+        )
+    </script>
+</body>
+
+</html>
