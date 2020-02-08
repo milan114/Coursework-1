@@ -1,3 +1,5 @@
+//Milan Hirani
+
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/js13kPWA/sw.js');
 };
