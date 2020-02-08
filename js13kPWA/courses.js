@@ -1,3 +1,4 @@
+//Milan Hirani
 var courses = [
     { 'slug': 'maths', 'topic': 'math', 'location': 'hendon', 'price': 100 },
     { 'slug': 'maths', 'topic': 'math', 'location': 'colindale', 'price': 80 },
